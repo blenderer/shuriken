@@ -38,6 +38,7 @@ slider = $("#slider").shuriken({
 ```
     
     How to shuffle to a different slide:
+    
 ```
 //2 is the index of the child element
 slider.ninjaStarSlice(2);
