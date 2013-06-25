@@ -1,7 +1,7 @@
 shuriken
 ========
 
-Minimal Left-right content slider jQuery plugin
+Minimal (Less than 900 bytes) Left-right content slider jQuery plugin
 
 Minimal HTML required:
 
