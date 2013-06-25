@@ -1,7 +1,7 @@
 /**
  * Shuriken v0.4 - Minimal Left-right content slider
  * Copyright 2013, Eric Harrison - twitter.com/Blenderer
- * Released under the MIT license - http://sam.zoy.org/wtfpl/
+ * Released under the MIT license - http://opensource.org/licenses/MIT
  */
 
 (function ($) {
