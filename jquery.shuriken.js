@@ -1,83 +1,78 @@
 /**
  * Shuriken v0.4 - Minimal Left-right content slider
- * Copyright 2013, Eric Harrison - http://twitter.com/Blenderer
- * Released under the MIT license - http://opensource.org/licenses/MIT
+ * Copyright 2013, Eric Harrison - twitter.com/Blenderer
+ * Released under the MIT license - http://sam.zoy.org/wtfpl/
  */
 
-  $.fn.shuriken = function(options) {
-		settings = $.extend({
-            speed: 1000,
-        }, options );
+(function ($) {
+    $.fn.shuriken = function(options) {
+        settings = $.extend({
+            speed: 1000
+        }, options);
 
-		previous = null;
+        var previous = null;
+        var container_width = this.width();
+        var kiddies = this.children();
 
-		container_width = this.width();
+        this.css('position', 'relative').css('overflow', 'hidden');
+        kiddies.css('width', '100%').css('height', '100%').css('position', 'absolute').css('left', '0');
 
-		kiddies = this.children();
+        var leftside = null;
+        var currentside = kiddies.slice(0, 1);
+        var rightside = kiddies.slice(1);
 
-		this.css('position', 'relative').css('overflow', 'hidden');
-		kiddies.css('width', '100%').css('height', '100%').css('position', 'absolute').css('left', '0');
+        rightside.css('left', container_width + 'px');
 
-		leftside = null;
-		currentside = kiddies.slice(0,1);
-		rightside = kiddies.slice(1);
+        updatePositions = function() {
+            kiddies.hide();
+            currentside.show();
+            previous.show();
 
-		rightside.css('left', container_width + 'px');
+            rePositionKids();
+            
+            kiddies.promise().done(function() {
+                kiddies.hide();
+                currentside.show();
+            });
+        };
 
-		updatePositions = function() {
-			kiddies.hide();
-			currentside.show();
-			previous.show();
+        rePositionKids = function() {
+            if (leftside) {
+                leftside.stop().animate({'left': '-' + container_width + 'px'}, settings.speed);
+            }
+            if (currentside) {
+                currentside.stop().animate({'left': '0px'}, settings.speed);
+            }
+            if (rightside) {
+                rightside.stop().animate({'left': '' + container_width + 'px'}, settings.speed);
+            }
+        }
 
-			rePositionKids();
-			
-			kiddies.promise().done(function() {
-				kiddies.hide();
-				currentside.show();
-			});
-		};
+        this.ninjaStarSlice = function(at) {    
+            if (!kiddies.is(":animated")) {
+                container_width = this.width();
 
-		rePositionKids = function() {
-			if (leftside) {
-				leftside.stop().animate({'left': '-' + container_width + 'px'}, settings.speed);
-			}
-			if (currentside) {
-				currentside.stop().animate({'left': '0px'}, settings.speed);
-			}
-			if (rightside) {
-				rightside.stop().animate({'left': '' + container_width + 'px'}, settings.speed);
-			}
-		}
+                previous = currentside; 
 
-		this.ninjaStarSlice = function(at) {	
-			if (!kiddies.is(":animated")) {
-				container_width = this.width();
+                leftside = null;
+                rightside = null;
+                currentside = null;
 
-				previous = currentside; 
+                currentside = kiddies.slice(at, at + 1);
 
-				leftside = null;
-				rightside = null;
-				currentside = null;
+                //if we're greater than 0
+                if (at > 0) {
+                    leftside = kiddies.slice(0, at);
+                }
+                //if we're not going larger than the list
+                if (at <= kiddies.length) {
+                    rightside = kiddies.slice(at + 1);
+                }
 
-				currentside = kiddies.slice(at, at + 1);
+                updatePositions();
+            }
+        };
 
-				//if we're greater than 0
-				if (at > 0) {
-					leftside = kiddies.slice(0, at);
-				}
-				//if we're not going larger than the list
-				if (at <= kiddies.length) {
-					rightside = kiddies.slice(at + 1);
-				}
-
-				updatePositions();
-			}
-		};
-
-		return this;
-	};
-	
-
-	
-
-	})(jQuery);
+        return this;
+    };
+})(jQuery);
