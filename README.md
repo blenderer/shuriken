@@ -16,7 +16,7 @@ Any HTML element with children will do. As an example:
 </div>
 ```
   Some sample CSS to use with this:
-``` 
+```
 #slider {
 	width: 50%;
 	height:100px;
@@ -31,6 +31,7 @@ Any HTML element with children will do. As an example:
   
   And finally, how to call Shuriken:
   (Speed is the only option right now)
+  
 ```
 slider = $("#slider").shuriken({
 	speed: 600
