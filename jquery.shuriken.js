@@ -23,7 +23,7 @@
 
         rightside.css('left', container_width + 'px');
 
-        updatePositions = function() {
+        var updatePositions = function() {
             kiddies.hide();
             currentside.show();
             previous.show();
@@ -36,7 +36,7 @@
             });
         };
 
-        rePositionKids = function() {
+        var rePositionKids = function() {
             if (leftside) {
                 leftside.stop().animate({'left': '-' + container_width + 'px'}, settings.speed);
             }
